@@ -8,7 +8,7 @@ import com.parse.ParseUser;
 import com.parse.ParseACL;
 import com.parse.ParseObject;
 
-import com.sharukhhasan.avantchallenge.models.Document;
+import com.sharukhhasan.docupload.models.Document;
 
 
 /**
