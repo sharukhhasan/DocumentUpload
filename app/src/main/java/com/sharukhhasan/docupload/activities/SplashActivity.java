@@ -9,6 +9,9 @@ import com.sharukhhasan.docupload.R;
 import com.parse.ParseUser;
 import com.parse.ParseAnonymousUtils;
 
+/**
+ * Created by Sharukh on 2/21/16.
+ */
 public class SplashActivity extends AppCompatActivity {
 
     @Override

@@ -27,6 +27,9 @@ import com.facebook.FacebookSdk;
 
 import com.sharukhhasan.docupload.R;
 
+/**
+ * Created by Sharukh on 2/21/16.
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
@@ -124,13 +127,10 @@ public class LoginActivity extends AppCompatActivity {
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
-                if(user != null)
-                {
+                if (user != null) {
                     Intent loggedIn = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(loggedIn);
-                }
-                else
-                {
+                } else {
                     Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
 
                     AlertDialog alertDialog = new AlertDialog.Builder(getApplicationContext()).create();
