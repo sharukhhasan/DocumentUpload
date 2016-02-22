@@ -1,13 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.sharukhhasan.docupload.activities.DocumentViewActivity">
+    tools:context="com.sharukhhasan.avantchallenge.activities.DocumentViewActivity">
 
+    <ImageView
+        android:layout_width="@dimen/abc_config_prefDialogWidth"
+        android:layout_height="@dimen/design_navigation_max_width"
+        android:id="@+id/docImgView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="@android:dimen/thumbnail_width"
+        android:layout_height="@dimen/abc_action_bar_default_height_material"
+        android:id="@+id/docTitleView"
+        android:layout_below="@+id/docImgView"
+        android:layout_centerHorizontal="true"
+        android:gravity="center" />
+
+    <TextView
+        android:layout_width="@android:dimen/thumbnail_width"
+        android:layout_height="@dimen/abc_action_bar_default_height_material"
+        android:id="@+id/docTypeView"
+        android:layout_below="@+id/docTitleView"
+        android:layout_centerHorizontal="true"
+        android:gravity="center" />
 </RelativeLayout>

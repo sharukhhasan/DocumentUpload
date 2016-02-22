@@ -28,8 +28,8 @@ public class SplashActivity extends AppCompatActivity {
                 }catch(InterruptedException e){
                     e.printStackTrace();
                 }finally{
-                    ParseUser currentUser = ParseUser.getCurrentUser();
-                    if(ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser()) || currentUser == null)
+                    //ParseUser currentUser = ParseUser.getCurrentUser();
+                    if(ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser()) || ParseUser.getCurrentUser() == null)
                     {
                         Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                         startActivity(intent);

@@ -5,6 +5,8 @@ import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.ParseFile;
 
+import java.io.File;
+
 /**
  * Created by Sharukh on 2/21/16.
  */
