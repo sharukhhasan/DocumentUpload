@@ -33,4 +33,9 @@
     <color name="base">#AAAAAA</color>
     <color name="iron">#CCCCCC</color>
     <color name="white">#FFFFFF</color>
+
+    <color name="medium_grey">#c9c9c9</color>
+    <color name="light_grey">#e3e3e3</color>
+    <color name="teal_blue">#9ad3de</color>
+    <color name="dark_teal_blue">#89bdd3</color>
 </resources>

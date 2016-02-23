@@ -5,18 +5,29 @@
     tools:context="activities.MainActivity">
 
     <item
-        android:id="@+id/action_new"
-        android:icon="@drawable/ic_action_new"
-        android:showAsAction="always"
-        android:title="@string/action_new">
-    </item>
-
-    <item
         android:id="@+id/action_logout"
         android:icon="@drawable/ic_exit_to_app_black_48dp"
         android:showAsAction="always"
         android:title="@string/action_logout">
-
     </item>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/documents_action"
+            android:icon="@drawable/ic_description_black_48dp"
+            android:title="@string/action_documents" />
+        <item
+            android:id="@+id/upload_action"
+            android:icon="@drawable/ic_file_upload_black_48dp"
+            android:title="@string/action_new" />
+        <item
+            android:id="@+id/settings_action"
+            android:icon="@drawable/ic_settings_black_48dp"
+            android:title="@string/action_settings" />
+        <item
+            android:id="@+id/logout_action"
+            android:icon="@drawable/ic_exit_to_app_black_48dp"
+            android:title="@string/action_logout" />
+    </group>
 
 </menu>

@@ -64,13 +64,13 @@
     <string name="com_parse_ui_login_dispatch_user_logged_in">"User logged in, starting: "</string>
     <string name="com_parse_ui_login_dispatch_user_not_logged_in">User not logged in, starting ParseLoginActivity</string>
 
-    <string name="menu_settings">Settings</string>
+    <string name="action_settings">Settings</string>
     <string name="title_activity_document_list">DocUpload</string>
     <string name="title_activity_new_document">DocumentActivity</string>
-    <string name="action_new">Upload a document</string>
+    <string name="action_new">Upload</string>
     <string name="action_search">Search</string>
     <string name="action_logout">Logout</string>
-    <string name="menu_title">My Documents</string>
+    <string name="action_documents">My Documents</string>
     <string name="meal_label">Add a document</string>
     <string name="save_button_text">Save</string>
     <string name="cancel_button_text">Cancel</string>
@@ -81,12 +81,13 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
-
     <string name="choice_w2">W2</string>
     <string name="choice_voided_check">Voided Check</string>
     <string name="choice_utility_bill">Utility Bill</string>
 
     <string name="dialog_box_camera">Avant will review your submission within 24 hours</string>
     <string name="dialog_box_ok">Ok</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
