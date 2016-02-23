@@ -12,11 +12,26 @@
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
 
-        <ImageView android:src="@drawable/docuploadlogo"
+        <ImageView
+            android:id="@+id/appicon"
+            android:src="@drawable/app_icon_medium"
             android:layout_width="wrap_content"
             android:layout_height="72dp"
             android:layout_marginBottom="24dp"
             android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="DocUpload"
+            android:id="@+id/appNameView"
+            android:layout_below="@+id/appicon"
+            android:layout_centerHorizontal="true"
+            android:textColor="#3F9DD1"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:typeface="monospace" />
 
         <!--  Email Label -->
         <android.support.design.widget.TextInputLayout
@@ -51,7 +66,8 @@
             android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"
             android:padding="12dp"
-            android:text="Login"/>
+            android:text="Login"
+            android:background="#3F9DD1" />
 
         <com.facebook.login.widget.LoginButton
             android:id="@+id/login_button"

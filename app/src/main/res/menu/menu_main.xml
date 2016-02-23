@@ -1,33 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="activities.MainActivity">
 
     <item
+        android:id="@+id/documents_action"
+        android:icon="@mipmap/ic_description_black_48dp"
+        android:title="@string/action_documents" />
+    <item
+        android:id="@+id/upload_action"
+        android:icon="@mipmap/ic_file_upload_black_48dp"
+        android:title="@string/action_new" />
+    <item
+        android:id="@+id/settings_action"
+        android:icon="@mipmap/ic_settings_black_48dp"
+        android:title="@string/action_settings" />
+    <item
         android:id="@+id/action_logout"
-        android:icon="@drawable/ic_exit_to_app_black_48dp"
-        android:showAsAction="always"
-        android:title="@string/action_logout">
-    </item>
-
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/documents_action"
-            android:icon="@drawable/ic_description_black_48dp"
-            android:title="@string/action_documents" />
-        <item
-            android:id="@+id/upload_action"
-            android:icon="@drawable/ic_file_upload_black_48dp"
-            android:title="@string/action_new" />
-        <item
-            android:id="@+id/settings_action"
-            android:icon="@drawable/ic_settings_black_48dp"
-            android:title="@string/action_settings" />
-        <item
-            android:id="@+id/logout_action"
-            android:icon="@drawable/ic_exit_to_app_black_48dp"
-            android:title="@string/action_logout" />
-    </group>
+        android:icon="@mipmap/ic_exit_to_app_black_48dp"
+        android:title="@string/action_logout" />
 
 </menu>

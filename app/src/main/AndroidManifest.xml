@@ -27,7 +27,7 @@
         <activity
             android:name=".activities.SplashActivity"
             android:label="@string/title_activity_splash"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,11 +44,25 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.SignupActivity" />
-        <activity android:name=".activities.MainActivity" />
-        <activity android:name=".activities.UploadActivity" />
-        <activity android:name=".activities.DocumentViewActivity" />
+        <activity
+            android:name=".activities.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".activities.SignupActivity"
+            android:label="@string/title_activity_signup"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".activities.MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".activities.UploadActivity"
+            android:label="@string/title_activity_upload"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".activities.DocumentViewActivity"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>

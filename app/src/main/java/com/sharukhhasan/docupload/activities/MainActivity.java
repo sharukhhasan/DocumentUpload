@@ -1,21 +1,19 @@
 package com.sharukhhasan.docupload.activities;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
-import android.support.design.widget.NavigationView;
-import android.view.View;
 import android.widget.AbsListView;
-import android.widget.ImageButton;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.Menu;
 import android.content.Intent;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.os.AsyncTask;
-import android.app.Fragment;
+import android.view.View;
+import android.content.res.Configuration;
+import android.widget.AdapterView;
 
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -34,12 +32,14 @@ import com.sharukhhasan.docupload.fragments.SettingsFragment;
  * Created by Sharukh on 2/21/16.
  */
 public class MainActivity extends AppCompatActivity implements AbsListView.OnScrollListener {
-    ImageButton uploadButton;
-    ListView listViewDocs;
-    ArrayList<Document> docList = new ArrayList<>();
-    DocumentListAdapter docAdapter;
-    DrawerLayout mDrawer;
-    Toolbar toolbar;
+    private ListView listViewDocs;
+    private ListView mDrawerList;
+    private ArrayList<Document> docList = new ArrayList<>();
+    private DocumentListAdapter docAdapter;
+    private Toolbar toolbar;
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private String[] mNavChoices;
 
     private boolean viewBusy = false;
 
@@ -53,20 +53,120 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
         setSupportActionBar(toolbar);
 
         // Find our drawer view
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        mNavChoices = getResources().getStringArray(R.array.nav_array);
+
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mNavChoices));
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view)
+            {
+                super.onDrawerClosed(view);
+                //getActionBar().setTitle(mTitle);
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView)
+            {
+                super.onDrawerOpened(drawerView);
+                //getActionBar().setTitle(mDrawerTitle);
+            }
+        };
+
+        // Set the drawer toggle as the DrawerListener
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         listViewDocs = (ListView) findViewById(R.id.list);
 
-        uploadButton = (ImageButton) findViewById(R.id.uploadButton);
-        uploadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent uploadIntent = new Intent(getApplicationContext(), UploadActivity.class);
-                startActivity(uploadIntent);
-            }
-        });
-
         new RemoteDataTask().execute();
+    }
+
+    /* The click listner for ListView in the navigation drawer */
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+        {
+            Intent intent = null;
+
+            switch(position)
+            {
+                case 0:
+                    intent = new Intent(getApplicationContext(), MainActivity.class);
+                    break;
+                case 1:
+                    //fragmentClass = SecondFragment.class;
+                    intent = new Intent(getApplicationContext(), UploadActivity.class);
+                    break;
+                case 2:
+                    //fragmentClass = ThirdFragment.class;
+                    intent = new Intent(getApplicationContext(), SettingsFragment.class);
+                    break;
+                case 3:
+                    ParseUser.logOut();
+                    intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    break;
+                default:
+                    intent = new Intent(getApplicationContext(), MainActivity.class);
+            }
+
+            if(intent != null)
+            {
+                startActivity(intent);
+            }
+        }
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState)
+    {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig)
+    {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        Intent intent = null;
+        // Pass the event to ActionBarDrawerToggle, if it returns
+        // true, then it has handled the app icon touch event
+        if(mDrawerToggle.onOptionsItemSelected(item))
+        {
+            return true;
+        }
+
+        switch(item.getItemId())
+        {
+            case R.id.documents_action:
+                intent = new Intent(getApplicationContext(), MainActivity.class);
+                break;
+            case R.id.upload_action:
+                //fragmentClass = SecondFragment.class;
+                intent = new Intent(getApplicationContext(), UploadActivity.class);
+                break;
+            case R.id.settings_action:
+                //fragmentClass = ThirdFragment.class;
+                intent = new Intent(getApplicationContext(), SettingsFragment.class);
+                break;
+            default:
+                intent = new Intent(getApplicationContext(), MainActivity.class);
+        }
+
+        startActivity(intent);
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -92,25 +192,10 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
 
     }
 
-    private void setupDrawerContent(NavigationView navigationView)
-    {
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem)
-            {
-                selectDrawerItem(menuItem);
-                return true;
-            }
-        });
-    }
-
     public void selectDrawerItem(MenuItem menuItem)
     {
-        // Create a new fragment
-        //Fragment fragment = null;
         Intent intent = null;
 
-        //Class fragmentClass;
         switch(menuItem.getItemId())
         {
             case R.id.documents_action:
@@ -128,21 +213,12 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
                 intent = new Intent(getApplicationContext(), MainActivity.class);
         }
 
-        try {
-            //fragment = (Fragment) fragmentClass.newInstance();
-            startActivity(intent);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // Insert the fragment by replacing any existing fragment
-        //FragmentManager fragmentManager = getSupportFragmentManager();
-        //fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+        startActivity(intent);
 
         // Highlight the selected item, update the title, and close the drawer
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
-        mDrawer.closeDrawers();
+        mDrawerLayout.closeDrawers();
     }
 
     public boolean isViewBusy()
@@ -184,7 +260,7 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
         }
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -211,5 +287,5 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
     protected void onPostCreate(Bundle savedInstanceState)
     {
         super.onPostCreate(savedInstanceState);
-    }
+    }*/
 }
