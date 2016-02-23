@@ -52,12 +52,19 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
         uploadButton = (ImageButton) findViewById(R.id.uploadButton);
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 Intent uploadIntent = new Intent(getApplicationContext(), UploadActivity.class);
                 startActivity(uploadIntent);
             }
         });
+
+        // Create a progressdialog
+        mProgressDialog = new ProgressDialog(MainActivity.this);
+        // Set progressdialog title
+        mProgressDialog.setTitle("DocUpload");
+        // Set progressdialog message
+        mProgressDialog.setMessage("Loading...");
+        mProgressDialog.setIndeterminate(false);
 
         new RemoteDataTask().execute();
     }
@@ -94,13 +101,6 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            // Create a progressdialog
-            mProgressDialog = new ProgressDialog(MainActivity.this);
-            // Set progressdialog title
-            mProgressDialog.setTitle("DocUpload");
-            // Set progressdialog message
-            mProgressDialog.setMessage("Loading...");
-            mProgressDialog.setIndeterminate(false);
             // Show progressdialog
             mProgressDialog.show();
         }
@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
                     doc.setTitle((String) objs.get("DocumentTitle"));
                     doc.setDocumentType((String) objs.get("DocumentType"));
                     ParseFile imageFile = objs.getParseFile("DocumentImage");
+                    doc.setPhotoURL(imageFile.getUrl());
                     doc.setPhotoFile(imageFile);
                     docList.add(doc);
                 }

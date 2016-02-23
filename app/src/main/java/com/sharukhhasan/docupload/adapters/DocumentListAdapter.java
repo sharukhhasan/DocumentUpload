@@ -116,10 +116,11 @@ public class DocumentListAdapter extends ArrayAdapter<Document> {
 
         void populate(Document doc, Context context, boolean isBusy)
         {
-            docName.setText(doc.getTitle());
+            //docName.setText(doc.getTitle());
 
             if(!isBusy)
             {
+                docName.setText(doc.getTitle());
                 Glide.with(context).load(doc.getPhotoURL()).into(docImg);
             }
         }

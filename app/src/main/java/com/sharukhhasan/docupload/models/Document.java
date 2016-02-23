@@ -12,6 +12,7 @@ import java.io.File;
  */
 @ParseClassName("Document")
 public class Document extends ParseObject {
+    private String photoURL;
 
     // Default constructor
     public Document() {}
@@ -58,6 +59,12 @@ public class Document extends ParseObject {
 
     public String getPhotoURL()
     {
-        return getParseFile("DocumentImage").getUrl();
+        //return getParseFile("DocumentImage").getUrl();
+        return photoURL;
+    }
+
+    public void setPhotoURL(String url)
+    {
+        photoURL = url;
     }
 }

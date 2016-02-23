@@ -6,6 +6,8 @@ import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +15,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.parse.GetDataCallback;
 import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -40,7 +39,6 @@ public class NewDocumentFragment extends Fragment {
     private TextView documentName;
     private ImageView documentPreview;
     private RadioGroup radioGroup;
-    private RadioButton rb_wTwo, rb_voidedCheck, rb_utilityBill;
     private String radioButtonChoice;
     private ProgressDialog mProgressDialog;
 
@@ -53,15 +51,43 @@ public class NewDocumentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle SavedInstanceState)
     {
-        View v = inflater.inflate(R.layout.new_document_fragment, parent, false);
+        View v = inflater.inflate(R.layout.fragment_new_document, parent, false);
 
         documentName = ((EditText) v.findViewById(R.id.document_name));
 
         radioGroup = (RadioGroup) v.findViewById(R.id.myRadioGroup);
+        radioGroup.setClickable(false);
+
+        photoButton = ((ImageButton) v.findViewById(R.id.photo_button));
+        photoButton.setClickable(false);
+
+        saveButton = ((Button) v.findViewById(R.id.save_button));
+        saveButton.setClickable(false);
+
+        documentName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                radioGroup.setClickable(true);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                radioGroup.setClickable(true);
+            }
+        });
+
+
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId)
             {
+                photoButton.setClickable(true);
+
                 if(checkedId == R.id.choiceW2)
                 {
                     radioButtonChoice = "W2";
@@ -77,19 +103,19 @@ public class NewDocumentFragment extends Fragment {
             }
         });
 
-        photoButton = ((ImageButton) v.findViewById(R.id.photo_button));
         photoButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v)
             {
+                saveButton.setClickable(true);
+
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(documentName.getWindowToken(), 0);
                 startCamera();
             }
         });
 
-        saveButton = ((Button) v.findViewById(R.id.save_button));
         saveButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -190,7 +216,6 @@ public class NewDocumentFragment extends Fragment {
         {
             Glide.with(getActivity()).load(docURL).into(documentPreview);
             documentPreview.setVisibility(View.VISIBLE);
-
         }
     }
 }

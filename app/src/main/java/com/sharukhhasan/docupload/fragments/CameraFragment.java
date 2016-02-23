@@ -44,7 +44,7 @@ public class CameraFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
-        View v = inflater.inflate(R.layout.camera_fragment, parent, false);
+        View v = inflater.inflate(R.layout.fragment_camera, parent, false);
         photoButton = (ImageButton) v.findViewById(R.id.camera_photo_button);
         saveButton = (ImageButton) v.findViewById(R.id.save_photo_button);
         saveButton.setVisibility(View.GONE);

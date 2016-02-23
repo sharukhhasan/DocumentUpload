@@ -86,4 +86,7 @@
     <string name="choice_w2">W2</string>
     <string name="choice_voided_check">Voided Check</string>
     <string name="choice_utility_bill">Utility Bill</string>
+
+    <string name="dialog_box_camera">Avant will review your submission within 24 hours</string>
+    <string name="dialog_box_ok">Ok</string>
 </resources>
