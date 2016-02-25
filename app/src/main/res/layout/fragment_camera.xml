@@ -14,14 +14,21 @@
     <ImageButton
         android:id="@+id/camera_photo_button"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="175dp"
         android:layout_weight="1"
         android:src="@drawable/ic_action_photo" />
 
     <ImageButton
+        android:id="@+id/rotate_photo_button"
+        android:layout_width="match_parent"
+        android:layout_height="175dp"
+        android:layout_weight="1"
+        android:src="@drawable/ic_rotate_right_black_24dp"/>
+
+    <ImageButton
         android:id="@+id/save_photo_button"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="175dp"
         android:layout_weight="1"
         android:src="@drawable/ic_get_app_black_24dp" />
 

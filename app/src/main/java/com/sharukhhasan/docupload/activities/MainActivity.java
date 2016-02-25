@@ -26,20 +26,15 @@ import java.util.List;
 import com.sharukhhasan.docupload.R;
 import com.sharukhhasan.docupload.adapters.DocumentListAdapter;
 import com.sharukhhasan.docupload.models.Document;
-import com.sharukhhasan.docupload.fragments.SettingsFragment;
 
 /**
  * Created by Sharukh on 2/21/16.
  */
 public class MainActivity extends AppCompatActivity implements AbsListView.OnScrollListener {
     private ListView listViewDocs;
-    private ListView mDrawerList;
     private ArrayList<Document> docList = new ArrayList<>();
     private DocumentListAdapter docAdapter;
-    private Toolbar toolbar;
-    private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-    private String[] mNavChoices;
 
     private boolean viewBusy = false;
 
@@ -49,15 +44,15 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         // Find our drawer view
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        mNavChoices = getResources().getStringArray(R.array.nav_array);
+        String[] mNavChoices = getResources().getStringArray(R.array.nav_array);
 
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        ListView mDrawerList = (ListView) findViewById(R.id.left_drawer);
         mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mNavChoices));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
@@ -67,14 +62,12 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
             public void onDrawerClosed(View view)
             {
                 super.onDrawerClosed(view);
-                //getActionBar().setTitle(mTitle);
             }
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView)
             {
                 super.onDrawerOpened(drawerView);
-                //getActionBar().setTitle(mDrawerTitle);
             }
         };
 
@@ -99,14 +92,9 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
                     intent = new Intent(getApplicationContext(), MainActivity.class);
                     break;
                 case 1:
-                    //fragmentClass = SecondFragment.class;
                     intent = new Intent(getApplicationContext(), UploadActivity.class);
                     break;
                 case 2:
-                    //fragmentClass = ThirdFragment.class;
-                    intent = new Intent(getApplicationContext(), SettingsFragment.class);
-                    break;
-                case 3:
                     ParseUser.logOut();
                     intent = new Intent(getApplicationContext(), LoginActivity.class);
                     break;
@@ -147,18 +135,12 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
             return true;
         }
 
-        switch(item.getItemId())
-        {
+        switch(item.getItemId()) {
             case R.id.documents_action:
                 intent = new Intent(getApplicationContext(), MainActivity.class);
                 break;
             case R.id.upload_action:
-                //fragmentClass = SecondFragment.class;
                 intent = new Intent(getApplicationContext(), UploadActivity.class);
-                break;
-            case R.id.settings_action:
-                //fragmentClass = ThirdFragment.class;
-                intent = new Intent(getApplicationContext(), SettingsFragment.class);
                 break;
             default:
                 intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -192,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
 
     }
 
-    public void selectDrawerItem(MenuItem menuItem)
+    /*public void selectDrawerItem(MenuItem menuItem)
     {
         Intent intent = null;
 
@@ -205,10 +187,6 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
                 //fragmentClass = SecondFragment.class;
                 intent = new Intent(getApplicationContext(), UploadActivity.class);
                 break;
-            case R.id.settings_action:
-                //fragmentClass = ThirdFragment.class;
-                intent = new Intent(getApplicationContext(), SettingsFragment.class);
-                break;
             default:
                 intent = new Intent(getApplicationContext(), MainActivity.class);
         }
@@ -219,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
         mDrawerLayout.closeDrawers();
-    }
+    }*/
 
     public boolean isViewBusy()
     {

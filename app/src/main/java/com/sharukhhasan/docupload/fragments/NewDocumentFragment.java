@@ -180,15 +180,6 @@ public class NewDocumentFragment extends Fragment {
         return v;
     }
 
-    /*
-     * All data entry about a document object is managed from the NewMealActivity.
-     * When the user wants to add a photo, we'll start up a custom
-     * CameraFragment that will let them take the photo and save it to the Meal
-     * object owned by the NewMealActivity. Create a new CameraFragment, swap
-     * the contents of the fragmentContainer (see activity_new_meal.xml), then
-     * add the NewMealFragment to the back stack so we can return to it when the
-     * camera is finished.
-     */
     public void startCamera()
     {
         Fragment cameraFragment = new CameraFragment();
@@ -201,11 +192,6 @@ public class NewDocumentFragment extends Fragment {
         transaction.commit();
     }
 
-    /*
-     * On resume, check and see if a photo has been set from the
-     * CameraFragment. If it has, load the image in this fragment and make the
-     * preview image visible.
-     */
     @Override
     public void onResume()
     {

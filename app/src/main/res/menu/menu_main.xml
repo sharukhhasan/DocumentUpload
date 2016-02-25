@@ -10,10 +10,6 @@
         android:icon="@mipmap/ic_file_upload_black_48dp"
         android:title="@string/action_new" />
     <item
-        android:id="@+id/settings_action"
-        android:icon="@mipmap/ic_settings_black_48dp"
-        android:title="@string/action_settings" />
-    <item
         android:id="@+id/action_logout"
         android:icon="@mipmap/ic_exit_to_app_black_48dp"
         android:title="@string/action_logout" />

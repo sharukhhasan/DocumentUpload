@@ -39,30 +39,16 @@ public class CameraFragment extends Fragment {
     private ParseFile photoFile;
     private ImageButton photoButton;
     private ImageButton saveButton;
+    private ImageButton rotateButton;
     private byte[] img_data;
+    private float angle = 90;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
         View v = inflater.inflate(R.layout.fragment_camera, parent, false);
+
         photoButton = (ImageButton) v.findViewById(R.id.camera_photo_button);
-        saveButton = (ImageButton) v.findViewById(R.id.save_photo_button);
-        saveButton.setVisibility(View.GONE);
-
-        document_Name = getArguments().getString("documentName");
-
-        if(camera == null)
-        {
-            try {
-                camera = Camera.open();
-                photoButton.setEnabled(true);
-            } catch (Exception e) {
-                Log.e(TAG, "No camera with exception: " + e.getMessage());
-                photoButton.setEnabled(false);
-                Toast.makeText(getActivity(), "No camera detected", Toast.LENGTH_LONG).show();
-            }
-        }
-
         photoButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -85,6 +71,7 @@ public class CameraFragment extends Fragment {
                     {
                         img_data = data;
                         saveButton.setVisibility(View.VISIBLE);
+                        rotateButton.setVisibility(View.VISIBLE);
                         //saveScaledPhoto(data);
                     }
 
@@ -93,16 +80,40 @@ public class CameraFragment extends Fragment {
             }
         });
 
+        saveButton = (ImageButton) v.findViewById(R.id.save_photo_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                if(img_data != null)
-                {
+            public void onClick(View v) {
+                if (img_data != null) {
                     saveScaledPhoto(img_data);
                 }
             }
         });
+        saveButton.setVisibility(View.GONE);
+
+        rotateButton = (ImageButton) v.findViewById(R.id.rotate_photo_button);
+        rotateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                angle += 90;
+
+            }
+        });
+        rotateButton.setVisibility(View.GONE);
+
+        if(camera == null)
+        {
+            try {
+                camera = Camera.open();
+                photoButton.setEnabled(true);
+            } catch (Exception e) {
+                Log.e(TAG, "No camera with exception: " + e.getMessage());
+                photoButton.setEnabled(false);
+                Toast.makeText(getActivity(), "No camera detected", Toast.LENGTH_LONG).show();
+            }
+        }
+
+        document_Name = getArguments().getString("documentName");
 
         surfaceView = (SurfaceView) v.findViewById(R.id.camera_surface_view);
         SurfaceHolder holder = surfaceView.getHolder();
@@ -140,16 +151,17 @@ public class CameraFragment extends Fragment {
     private void saveScaledPhoto(byte[] data)
     {
         // Resize photo from camera byte array
-        Bitmap mealImage = BitmapFactory.decodeByteArray(data, 0, data.length);
-        Bitmap mealImageScaled = Bitmap.createScaledBitmap(mealImage, 200, 200 * mealImage.getHeight() / mealImage.getWidth(), false);
+        Bitmap documentImage = BitmapFactory.decodeByteArray(data, 0, data.length);
+        Bitmap documentImageScaled = Bitmap.createScaledBitmap(documentImage, 200, 200 * documentImage.getHeight() / documentImage.getWidth(), false);
 
         // Override Android default landscape orientation and save portrait
         Matrix matrix = new Matrix();
-        matrix.postRotate(90);
-        Bitmap rotatedScaledMealImage = Bitmap.createBitmap(mealImageScaled, 0, 0, mealImageScaled.getWidth(), mealImageScaled.getHeight(), matrix, true);
+
+        matrix.postRotate(angle);
+        Bitmap rotatedScaledDocImage = Bitmap.createBitmap(documentImageScaled, 0, 0, documentImageScaled.getWidth(), documentImageScaled.getHeight(), matrix, true);
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        rotatedScaledMealImage.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+        rotatedScaledDocImage.compress(Bitmap.CompressFormat.JPEG, 100, bos);
 
         byte[] scaledData = bos.toByteArray();
 

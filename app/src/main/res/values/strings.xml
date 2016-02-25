@@ -94,7 +94,6 @@
     <string-array name="nav_array">
         <item>My Documents</item>
         <item>Upload</item>
-        <item>Settings</item>
         <item>Logout</item>
     </string-array>
 
