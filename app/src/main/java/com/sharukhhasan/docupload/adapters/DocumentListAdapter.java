@@ -27,7 +27,6 @@ public class DocumentListAdapter extends ArrayAdapter<Document> {
     List<Document> documentList = new ArrayList<Document>();
     Context context;
     LayoutInflater inflater;
-    ParseFile docFile;
     String docImgURL;
 
     public DocumentListAdapter(Context context, ArrayList<Document> documentList)
@@ -72,10 +71,7 @@ public class DocumentListAdapter extends ArrayAdapter<Document> {
 
             // Add and download the image
             holder.docImg = (ImageView) convertView.findViewById(R.id.docImgView);
-            //ParseFile imageFile = documentList.get(position).getParseFile("DocumentImage");
             docImgURL = documentList.get(position).getParseFile("DocumentImage").getUrl();
-            //holder.docImg.setParseFile(imageFile);
-            //holder.docImg.loadInBackground();
 
             convertView.setTag(holder);
         }
@@ -116,8 +112,6 @@ public class DocumentListAdapter extends ArrayAdapter<Document> {
 
         void populate(Document doc, Context context, boolean isBusy)
         {
-            //docName.setText(doc.getTitle());
-
             if(!isBusy)
             {
                 docName.setText(doc.getTitle());

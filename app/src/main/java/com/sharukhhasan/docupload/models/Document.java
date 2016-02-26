@@ -59,7 +59,6 @@ public class Document extends ParseObject {
 
     public String getPhotoURL()
     {
-        //return getParseFile("DocumentImage").getUrl();
         return photoURL;
     }
 

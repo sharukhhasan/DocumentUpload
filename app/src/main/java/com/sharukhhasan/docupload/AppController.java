@@ -25,7 +25,7 @@ public class AppController extends Application {
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, "9elS8VcUvCA1lVClGQumHZhXXzl1ZtLbm0DeJpKM", "EV5UAegvZW41hLT0OmYh9BtkrE6frO1imVhpKbti");
 
-        ParseFacebookUtils.initialize(this);
+        //ParseFacebookUtils.initialize(this);
 
         ParseUser.enableAutomaticUser();
         ParseACL defaultACL = new ParseACL();

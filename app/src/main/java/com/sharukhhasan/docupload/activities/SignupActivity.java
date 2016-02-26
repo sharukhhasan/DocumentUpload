@@ -13,7 +13,6 @@ import android.content.Intent;
 
 import java.util.Locale;
 
-import com.parse.Parse;
 import com.parse.ParseUser;
 import com.parse.ParseException;
 import com.parse.SignUpCallback;
@@ -29,6 +28,7 @@ import com.sharukhhasan.docupload.R;
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
 
+    // Bind user inputs
     @InjectView(R.id.input_name) EditText _usernameText;
     @InjectView(R.id.input_email) EditText _emailText;
     @InjectView(R.id.input_password) EditText _passwordText;
@@ -43,28 +43,28 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
         ButterKnife.inject(this);
 
+        // onClick functionality for sign up button
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
+                // Sign up user
                 signup();
             }
         });
 
+        // onClick functionality for login button
         _loginLink.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 // Finish the registration screen and return to the Login activity
                 finish();
             }
         });
     }
 
+    // Signup function
     public void signup()
     {
-        Log.d(TAG, "Signup");
-
         if(!validate())
         {
             onSignupFailed();
@@ -85,8 +85,7 @@ public class SignupActivity extends AppCompatActivity {
         createNewUser(userEmail, username.toLowerCase(Locale.getDefault()), userPassword);
 
         new android.os.Handler().postDelayed(new Runnable() {
-            public void run()
-            {
+            public void run() {
                 onSignupSuccess();
                 // onSignupFailed();
                 progressDialog.dismiss();
@@ -109,6 +108,7 @@ public class SignupActivity extends AppCompatActivity {
         _signupButton.setEnabled(true);
     }
 
+    // check user inputs validity
     public boolean validate()
     {
         boolean valid = true;
@@ -151,13 +151,15 @@ public class SignupActivity extends AppCompatActivity {
         return valid;
     }
 
+    // Create new user
     private void createNewUser(String email, String username, String password)
     {
-        ParseUser user = new ParseUser();
-        user.setEmail(email);
-        user.setUsername(username);
-        user.setPassword(password);
+        ParseUser user = new ParseUser();   // Initialize new parse user
+        user.setEmail(email);               // Set user inputted email
+        user.setUsername(username);         // Set user inputted username
+        user.setPassword(password);         // Set user inputted password
 
+        // attempt to sign up user with given credentials
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e)
             {

@@ -21,15 +21,16 @@ public class UploadActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState)
     {
         doc = new Document();
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
-
-        // Begin with main data entry view,
         setContentView(R.layout.activity_upload);
+
+        // Initialize new FragmentManager
         FragmentManager manager = getFragmentManager();
         Fragment fragment = manager.findFragmentById(R.id.fragmentContainer);
 
+        // if true, begin NewDocumentFragment
         if(fragment == null)
         {
             fragment = new NewDocumentFragment();
@@ -37,6 +38,7 @@ public class UploadActivity extends AppCompatActivity {
         }
     }
 
+    // return current document
     public Document getCurrentDocument()
     {
         return doc;

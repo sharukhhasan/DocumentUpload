@@ -28,7 +28,7 @@ public class SplashActivity extends AppCompatActivity {
                 }catch(InterruptedException e){
                     e.printStackTrace();
                 }finally{
-                    //ParseUser currentUser = ParseUser.getCurrentUser();
+                    // if user has not used app before or does not exist, go to login activity, else go to main
                     if(ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser()) || ParseUser.getCurrentUser() == null)
                     {
                         Intent intent = new Intent(SplashActivity.this, LoginActivity.class);

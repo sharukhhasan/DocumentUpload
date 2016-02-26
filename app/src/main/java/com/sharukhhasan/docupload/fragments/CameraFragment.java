@@ -48,9 +48,9 @@ public class CameraFragment extends Fragment {
     {
         View v = inflater.inflate(R.layout.fragment_camera, parent, false);
 
+        // Initalize photo button, and onClick functionality
         photoButton = (ImageButton) v.findViewById(R.id.camera_photo_button);
         photoButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 if (camera == null) {
@@ -58,21 +58,19 @@ public class CameraFragment extends Fragment {
                 }
 
                 camera.takePicture(new Camera.ShutterCallback() {
-
                     @Override
                     public void onShutter() {
                         // nothing to do
                     }
 
                 }, null, new Camera.PictureCallback() {
-
+                    // Set picture bytes, make save and rotate buttons visible
                     @Override
                     public void onPictureTaken(byte[] data, Camera camera)
                     {
                         img_data = data;
                         saveButton.setVisibility(View.VISIBLE);
                         rotateButton.setVisibility(View.VISIBLE);
-                        //saveScaledPhoto(data);
                     }
 
                 });
@@ -80,17 +78,19 @@ public class CameraFragment extends Fragment {
             }
         });
 
+        // Initialize save button, and onClick functionality
         saveButton = (ImageButton) v.findViewById(R.id.save_photo_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (img_data != null) {
+                if(img_data != null) {
                     saveScaledPhoto(img_data);
                 }
             }
         });
         saveButton.setVisibility(View.GONE);
 
+        // Initialize rotate button, and onClick functionality
         rotateButton = (ImageButton) v.findViewById(R.id.rotate_photo_button);
         rotateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +101,7 @@ public class CameraFragment extends Fragment {
         });
         rotateButton.setVisibility(View.GONE);
 
+        // Try to open camera
         if(camera == null)
         {
             try {
@@ -113,12 +114,14 @@ public class CameraFragment extends Fragment {
             }
         }
 
+        // Set document name
         document_Name = getArguments().getString("documentName");
 
+        // Initialize camera view
         surfaceView = (SurfaceView) v.findViewById(R.id.camera_surface_view);
         SurfaceHolder holder = surfaceView.getHolder();
         holder.addCallback(new Callback() {
-
+            // Begin preview
             public void surfaceCreated(SurfaceHolder holder)
             {
                 try {
@@ -148,6 +151,7 @@ public class CameraFragment extends Fragment {
         return v;
     }
 
+    // Save image
     private void saveScaledPhoto(byte[] data)
     {
         // Resize photo from camera byte array
@@ -169,7 +173,6 @@ public class CameraFragment extends Fragment {
         String fileNameBuilder = ParseUser.getCurrentUser().getUsername() + "_" + document_Name + ".jpg";
         photoFile = new ParseFile(fileNameBuilder, scaledData);
         photoFile.saveInBackground(new SaveCallback() {
-
             public void done(ParseException e)
             {
                 if(e != null)

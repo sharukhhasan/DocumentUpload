@@ -6,14 +6,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.widget.AbsListView;
-import android.view.MenuItem;
 import android.content.Intent;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.os.AsyncTask;
 import android.view.View;
 import android.content.res.Configuration;
 import android.widget.AdapterView;
+import android.util.Log;
 
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -27,14 +29,19 @@ import com.sharukhhasan.docupload.R;
 import com.sharukhhasan.docupload.adapters.DocumentListAdapter;
 import com.sharukhhasan.docupload.models.Document;
 
+import butterknife.InjectView;
+
 /**
  * Created by Sharukh on 2/21/16.
  */
 public class MainActivity extends AppCompatActivity implements AbsListView.OnScrollListener {
+    private static final String TAG = "MainActivity";
+    private String tester;
     private ListView listViewDocs;
     private ArrayList<Document> docList = new ArrayList<>();
     private DocumentListAdapter docAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
+    private Button uploadButton;
 
     private boolean viewBusy = false;
 
@@ -47,15 +54,30 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Initialize upload button (used only if user has no previous documents)
+        uploadButton = (Button) findViewById(R.id.btn_upload);
+
+        uploadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent uploadIntent = new Intent(getApplicationContext(), UploadActivity.class);
+                startActivity(uploadIntent);
+            }
+        });
+
         // Find our drawer view
         DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
+        // String array of choices in navigation drawer
         String[] mNavChoices = getResources().getStringArray(R.array.nav_array);
 
+        // Initalizing navigation drawer, and onClick functionality
         ListView mDrawerList = (ListView) findViewById(R.id.left_drawer);
         mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mNavChoices));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
+        // Setting action of navigation drawer
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
 
             /** Called when a drawer has settled in a completely closed state. */
@@ -79,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
         new RemoteDataTask().execute();
     }
 
-    /* The click listner for ListView in the navigation drawer */
+    // onClick for ListView in the navigation drawer
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id)
@@ -124,33 +146,7 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        Intent intent = null;
-        // Pass the event to ActionBarDrawerToggle, if it returns
-        // true, then it has handled the app icon touch event
-        if(mDrawerToggle.onOptionsItemSelected(item))
-        {
-            return true;
-        }
-
-        switch(item.getItemId()) {
-            case R.id.documents_action:
-                intent = new Intent(getApplicationContext(), MainActivity.class);
-                break;
-            case R.id.upload_action:
-                intent = new Intent(getApplicationContext(), UploadActivity.class);
-                break;
-            default:
-                intent = new Intent(getApplicationContext(), MainActivity.class);
-        }
-
-        startActivity(intent);
-
-        return super.onOptionsItemSelected(item);
-    }
-
+    // determines when list has been scrolled, which leads to data pull
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState)
     {
@@ -174,36 +170,13 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
 
     }
 
-    /*public void selectDrawerItem(MenuItem menuItem)
-    {
-        Intent intent = null;
-
-        switch(menuItem.getItemId())
-        {
-            case R.id.documents_action:
-                intent = new Intent(getApplicationContext(), MainActivity.class);
-                break;
-            case R.id.upload_action:
-                //fragmentClass = SecondFragment.class;
-                intent = new Intent(getApplicationContext(), UploadActivity.class);
-                break;
-            default:
-                intent = new Intent(getApplicationContext(), MainActivity.class);
-        }
-
-        startActivity(intent);
-
-        // Highlight the selected item, update the title, and close the drawer
-        menuItem.setChecked(true);
-        setTitle(menuItem.getTitle());
-        mDrawerLayout.closeDrawers();
-    }*/
-
+    // viewBusy is true when list is scrolling
     public boolean isViewBusy()
     {
         return viewBusy;
     }
 
+    // asynchronously grab data from parse
     private class RemoteDataTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {
@@ -214,7 +187,9 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
                 query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
                 query.orderByAscending("createdAt");
                 docObjs = query.find();
-                for (ParseObject objs : docObjs) {
+
+                for(ParseObject objs : docObjs)
+                {
                     Document doc = new Document();
                     doc.setTitle((String) objs.get("DocumentTitle"));
                     doc.setDocumentType((String) objs.get("DocumentType"));
@@ -230,40 +205,12 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
         }
 
         @Override
-        protected void onPostExecute(Void result) {
+        protected void onPostExecute(Void result)
+        {
             // Pass the results into ListViewAdapter.java
             docAdapter = new DocumentListAdapter(MainActivity.this, docList);
             // Binds the Adapter to the ListView
             listViewDocs.setAdapter(docAdapter);
         }
     }
-
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        if(item.getItemId() == R.id.action_logout)
-        {
-            ParseUser.logOut();
-            Intent loginIntent = new Intent(this, LoginActivity.class);
-            startActivity(loginIntent);
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState)
-    {
-        super.onPostCreate(savedInstanceState);
-    }*/
 }

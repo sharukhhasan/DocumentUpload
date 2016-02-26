@@ -53,6 +53,7 @@ public class NewDocumentFragment extends Fragment {
     {
         View v = inflater.inflate(R.layout.fragment_new_document, parent, false);
 
+        // Initialize view components
         documentName = ((EditText) v.findViewById(R.id.document_name));
 
         radioGroup = (RadioGroup) v.findViewById(R.id.myRadioGroup);
@@ -64,10 +65,11 @@ public class NewDocumentFragment extends Fragment {
         saveButton = ((Button) v.findViewById(R.id.save_button));
         saveButton.setClickable(false);
 
+        // Make radiobuttons clickable when text is inputted into document title
         documentName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                radioGroup.setClickable(false);
             }
 
             @Override
@@ -81,7 +83,7 @@ public class NewDocumentFragment extends Fragment {
             }
         });
 
-
+        // Find checked document type choice
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId)
@@ -103,8 +105,8 @@ public class NewDocumentFragment extends Fragment {
             }
         });
 
+        // Begin camera onClick
         photoButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v)
             {
@@ -116,8 +118,8 @@ public class NewDocumentFragment extends Fragment {
             }
         });
 
+        // Add document attributes to document
         saveButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v)
             {
@@ -138,7 +140,6 @@ public class NewDocumentFragment extends Fragment {
 
                 // Save the document and return
                 document.saveInBackground(new SaveCallback() {
-
                     @Override
                     public void done(ParseException e)
                     {
@@ -163,9 +164,9 @@ public class NewDocumentFragment extends Fragment {
             }
         });
 
+        // Initialize cancel button, and onClick cancel
         cancelButton = ((Button) v.findViewById(R.id.cancel_button));
         cancelButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 getActivity().setResult(Activity.RESULT_CANCELED);
@@ -180,6 +181,7 @@ public class NewDocumentFragment extends Fragment {
         return v;
     }
 
+    // Start CameraFragment
     public void startCamera()
     {
         Fragment cameraFragment = new CameraFragment();
