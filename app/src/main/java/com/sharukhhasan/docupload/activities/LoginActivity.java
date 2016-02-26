@@ -21,9 +21,6 @@ import butterknife.InjectView;
 import com.parse.ParseUser;
 import com.parse.ParseException;
 import com.parse.LogInCallback;
-import com.parse.ParseFacebookUtils;
-
-import com.facebook.FacebookSdk;
 
 import com.sharukhhasan.docupload.R;
 
@@ -33,7 +30,6 @@ import com.sharukhhasan.docupload.R;
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
-    //private ParseUser currentUser;
 
     // Bind UI components
     @InjectView(R.id.input_username) EditText usernameInput;
@@ -47,7 +43,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        //FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_login);
 
         ButterKnife.inject(this);
@@ -64,10 +59,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                String username = usernameInput.getText().toString();
-                String password = passwordInput.getText().toString();
                 validLogin();
-                //loginUser(username.toLowerCase(Locale.getDefault()), password);
             }
         });
 
@@ -87,7 +79,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        //ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
     }
 
     public void validLogin()

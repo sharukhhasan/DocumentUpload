@@ -9,13 +9,11 @@ import android.widget.AbsListView;
 import android.content.Intent;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.os.AsyncTask;
 import android.view.View;
 import android.content.res.Configuration;
 import android.widget.AdapterView;
-import android.util.Log;
 
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -29,14 +27,10 @@ import com.sharukhhasan.docupload.R;
 import com.sharukhhasan.docupload.adapters.DocumentListAdapter;
 import com.sharukhhasan.docupload.models.Document;
 
-import butterknife.InjectView;
-
 /**
  * Created by Sharukh on 2/21/16.
  */
 public class MainActivity extends AppCompatActivity implements AbsListView.OnScrollListener {
-    private static final String TAG = "MainActivity";
-    private String tester;
     private ListView listViewDocs;
     private ArrayList<Document> docList = new ArrayList<>();
     private DocumentListAdapter docAdapter;

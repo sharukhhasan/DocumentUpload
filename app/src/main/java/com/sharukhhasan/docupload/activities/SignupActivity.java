@@ -3,7 +3,6 @@ package com.sharukhhasan.docupload.activities;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,8 +25,6 @@ import com.sharukhhasan.docupload.R;
  * Created by Sharukh on 2/21/16.
  */
 public class SignupActivity extends AppCompatActivity {
-    private static final String TAG = "SignupActivity";
-
     // Bind user inputs
     @InjectView(R.id.input_name) EditText _usernameText;
     @InjectView(R.id.input_email) EditText _emailText;
@@ -87,7 +84,6 @@ public class SignupActivity extends AppCompatActivity {
         new android.os.Handler().postDelayed(new Runnable() {
             public void run() {
                 onSignupSuccess();
-                // onSignupFailed();
                 progressDialog.dismiss();
             }
         }, 3000);
@@ -116,7 +112,6 @@ public class SignupActivity extends AppCompatActivity {
         String name = _usernameText.getText().toString();
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
-        String confirmPassword = _confirmPasswordText.getText().toString();
 
         if(name.isEmpty() || name.length() < 3)
         {

@@ -21,8 +21,6 @@ public class UploadActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState)
     {
         doc = new Document();
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
 
