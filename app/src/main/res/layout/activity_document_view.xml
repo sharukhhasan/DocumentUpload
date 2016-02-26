@@ -31,4 +31,27 @@
         android:layout_below="@+id/docTitleView"
         android:layout_centerHorizontal="true"
         android:gravity="center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Document Title"
+        android:id="@+id/titleView"
+        android:layout_below="@+id/docImgView"
+        android:layout_toLeftOf="@+id/docTitleView"
+        android:layout_toStartOf="@+id/docTitleView"
+        android:layout_alignBottom="@+id/docTitleView"
+        android:gravity="center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Document Type"
+        android:id="@+id/textView"
+        android:layout_alignTop="@+id/docTypeView"
+        android:layout_toLeftOf="@+id/docTypeView"
+        android:layout_alignBottom="@+id/docTypeView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:gravity="center" />
 </RelativeLayout>

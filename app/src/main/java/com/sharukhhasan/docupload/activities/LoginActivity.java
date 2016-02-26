@@ -31,11 +31,11 @@ import com.sharukhhasan.docupload.R;
  * Created by Sharukh on 2/21/16.
  */
 public class LoginActivity extends AppCompatActivity {
-
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
     private ParseUser currentUser;
 
+    // Bind UI components
     @InjectView(R.id.input_username) EditText usernameInput;
     @InjectView(R.id.input_password) EditText passwordInput;
     @InjectView(R.id.btn_login)
@@ -58,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
             myView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
 
+        // onClick action of login button
         _loginButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -65,10 +66,12 @@ public class LoginActivity extends AppCompatActivity {
             {
                 String username = usernameInput.getText().toString();
                 String password = passwordInput.getText().toString();
-                loginUser(username.toLowerCase(Locale.getDefault()), password);
+                validLogin();
+                //loginUser(username.toLowerCase(Locale.getDefault()), password);
             }
         });
 
+        // onClick action of sign up button
         _signupLink.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -95,6 +98,7 @@ public class LoginActivity extends AppCompatActivity {
         boolean incorrect = false;
         View focusView = null;
 
+        // Checks if password meets conditions
         if(TextUtils.isEmpty(password))
         {
             passwordInput.setError(getString(R.string.error_field_required));
@@ -108,6 +112,7 @@ public class LoginActivity extends AppCompatActivity {
             incorrect = true;
         }
 
+        // Checks if username field is empty
         if (TextUtils.isEmpty(username))
         {
             usernameInput.setError(getString(R.string.error_field_required));
@@ -124,6 +129,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void loginUser(String username, String password)
     {
+        // Attempt to log users in, if credentials are correct
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
