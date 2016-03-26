@@ -3,6 +3,7 @@ package com.sharukhhasan.docupload.activities;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
+import android.view.Window;
 
 import com.sharukhhasan.docupload.R;
 
